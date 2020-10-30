@@ -6,10 +6,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const grid = document.querySelector('.grid');
     let currentPos = 4;
     let block = Array.from(grid.querySelectorAll('div'));
+    let timerId = null;
 
     // upcoming display
     const upcomingGrid = document.querySelector('.upcomingGrid');
     let upcomingSquares = Array.from(upcomingGrid.querySelectorAll('div'));
+
+    // start button
+    const startBtn = document.querySelector('button');
 
     //  eventListeners
     const controls = (e) => {
@@ -74,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
         undrawTet();
         currentPos = currentPos += width;
         drawTet();
-        // freeze();
+        freezeTet();
     }
 
     const moveRight = () => {
@@ -157,7 +161,33 @@ document.addEventListener('DOMContentLoaded', () => {
         })
     };
 
-    upDisplay();
+    // freeze tetronimo
+    const freezeTet = () => {
+        if (current.some(index => block[currentPos + index + width].classList.contains('block3')
+        || block[currentPos + index + width].classList.contains('block2'))) {
+            current.forEach(index => block[index + currentPos].classList.add('block2'))
+
+            randomTet = nextRandom;
+            nextRandom = Math.floor(Math.random()*tetArray.length);
+            current = tetArray[randomTet][currentRot];
+            currentPos = 4;
+            drawTet();
+            upDisplay();
+        }
+    };
+
+    // Start game
+    startBtn.addEventListener('click', () => {
+        if (timerId) {
+            clearInterval(timerId);
+            timerId = null;
+        } else {
+            drawTet();
+            timerId = setInterval(moveDown, 1000);
+            nextRandom = Math.floor(Math.random()*tetArray.length);
+            upDisplay();
+        }
+    })
 })
 
 
