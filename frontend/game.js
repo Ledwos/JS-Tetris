@@ -7,11 +7,13 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentPos = 4;
     let block = Array.from(grid.querySelectorAll('div'));
 
+    // upcoming display
+    const upcomingGrid = document.querySelector('.upcomingGrid');
+    let upcomingSquares = Array.from(upcomingGrid.querySelectorAll('div'));
+
     //  eventListeners
     const controls = (e) => {
-        console.log(e.keyCode);
         if (e.keyCode === 39) {
-            console.log('right');
             moveRight();
         } else if (e.keyCode === 38) {
             rotate();
@@ -127,6 +129,35 @@ document.addEventListener('DOMContentLoaded', () => {
     connectStr.innerHTML = test;
 
     drawTet();
+
+    // show upcoming tetronimo
+    const upWidth = 4;
+    const upIndex = 0;
+    const upHeight = 4;
+    
+    // upcoming shape array
+    let upTetArray = [
+        [1, upWidth+1, upWidth*2+1, 2],
+        [0,upWidth,upWidth+1,upWidth*2+1],
+        [1,upWidth,upWidth+1,upWidth+2],
+        [0,1,upWidth,upWidth+1],
+        [1,upWidth+1,upWidth*2+1,upWidth*3+1],
+    ]
+
+    // random shape
+    let nextRandom = 0;
+
+    // display upcoming shape in grid
+    const upDisplay = () => {
+        upcomingSquares.forEach(square => {
+            square.classList.remove('block');
+        });
+        upTetArray[nextRandom].forEach( index => {
+            upcomingSquares[upIndex + index].classList.add('block');
+        })
+    };
+
+    upDisplay();
 })
 
 

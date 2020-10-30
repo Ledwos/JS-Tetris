@@ -7,7 +7,7 @@
     flex-wrap: wrap;
 }
 
-.grid div {
+.grid div, .upcomingGrid div {
     border: 1px solid rgba(0, 0, 255, 0.521);
     width: 20px;
     height: 20px;
@@ -19,4 +19,15 @@
 
 .block2 {
     background-color: rgb(187, 85, 85);
+}
+
+.block3 {
+    background-color: rgb(180, 39, 169);
+}
+
+.upcomingGrid {
+    height: 88px;
+    width: 88px;
+    display: flex;
+    flex-wrap: wrap;
 }
