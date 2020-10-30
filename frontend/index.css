@@ -12,3 +12,11 @@
     width: 20px;
     height: 20px;
 }
+
+.block {
+    background-color: red;
+}
+
+.block2 {
+    background-color: rgb(187, 85, 85);
+}

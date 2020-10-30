@@ -4,6 +4,25 @@ document.addEventListener('DOMContentLoaded', () => {
     const width = 10;
     const height = 20;
     const grid = document.querySelector('.grid');
+    let currentPos = 4;
+    let block = Array.from(grid.querySelectorAll('div'));
+
+    //  eventListeners
+    const controls = (e) => {
+        console.log(e.keyCode);
+        if (e.keyCode === 39) {
+            console.log('right');
+            moveRight();
+        } else if (e.keyCode === 38) {
+            rotate();
+        } else if (e.keyCode === 37) {
+            moveLeft();
+        } else if (e.keyCode === 40) {
+            moveDown();
+        }
+    };
+    
+    document.addEventListener('keyup', controls);
 
     // Tetrominoes 
     const lTet = [
@@ -42,12 +61,72 @@ document.addEventListener('DOMContentLoaded', () => {
       ]
 
     const tetArray = [lTet, zTet, tTet, oTet, iTet];
+
+    // random select tetromino
+    let randomTet = Math.floor(Math.random()*tetArray.length);
+    let currentRot = 0;
+    let current = tetArray[randomTet][currentRot];
+
+    // tetronimo motion... tetronimotion :p
+    const moveDown = () => {
+        undrawTet();
+        currentPos = currentPos += width;
+        drawTet();
+        // freeze();
+    }
+
+    const moveRight = () => {
+        undrawTet();
+        const atRightEdge = current.some(index => (currentPos + index) % width === width - 1)
+        if (!atRightEdge) currentPos += 1
+        if (current.some(index => block[currentPos + index].classList.contains('block2'))) {
+            currentPos -= 1;
+        };
+        drawTet();
+    }
+
+    const moveLeft = () => {
+        undrawTet();
+        const atLeftEdge = current.some(index => (currentPos + index) % width === 0)
+        if(!atLeftEdge) currentPos -= 1;
+        if(current.some(index => block[currentPos + index].classList.contains('block2'))) {
+            currentPos += 1;
+        };
+        drawTet();
+    }
+
+    // rotate tetronimo
+    const rotate = () => {
+        undrawTet();
+        currentRot ++;
+        if (currentRot === current.length) {
+            currentRot = 0;
+        }
+        current = tetArray[randomTet][currentRot];
+        drawTet();
+    }
+    
+    // draw tetronimo
+    const drawTet = () => {
+        current.forEach( index => {
+            block[currentPos + index].classList.add('block');
+        })
+    }
+
+    // undraw tetronimo
+    const undrawTet = () => {
+        current.forEach(index => {
+            block[currentPos + index].classList.remove('block');
+        })
+    }
     
     // test connection:
     let test = 'true';
     
     let connectStr = document.querySelector('#connectStr');
     connectStr.innerHTML = test;
+
+    drawTet();
 })
 
 

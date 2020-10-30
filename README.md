@@ -11,6 +11,7 @@
  - JS
  - Node / Express
 
- Nothing too fancy, the game is the focus here.
+Nothing too fancy, the game is the focus here.
 
 
+This was completed following the FreeCodeCamp tutorial
