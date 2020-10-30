@@ -1,0 +1,16 @@
+{
+  "name": "JS-Tetris",
+  "version": "1.0.0",
+  "description": "I play so much I may as well write it",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^2.0.6"
+  }
+}
