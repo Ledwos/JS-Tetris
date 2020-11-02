@@ -22,14 +22,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const startBtn = document.querySelector('button');
 
     //  eventListeners
+    // prevent defaults
+    window.addEventListener("keydown", (e) => {
+        // space and arrow keys
+        if(['ArrowRight', 'ArrowLeft', 'ArrowDown', 'ArrowUp', ' '].indexOf(e.key) > -1) {
+            e.preventDefault();
+        }
+    });
+    // controls
     const controls = (e) => {
         if (e.keyCode === 39) {
             moveRight();
         } else if (e.keyCode === 38) {
+            e.preventDefault();
             rotate();
         } else if (e.keyCode === 37) {
             moveLeft();
         } else if (e.keyCode === 40) {
+            e.preventDefault();
             moveDown();
         }
     };
@@ -177,10 +187,10 @@ document.addEventListener('DOMContentLoaded', () => {
             nextRandom = Math.floor(Math.random()*tetArray.length);
             current = tetArray[randomTet][currentRot];
             currentPos = 4;
+            addScore();
             drawTet();
             upDisplay();
             gameOver();
-            addScore();
         }
     };
 
