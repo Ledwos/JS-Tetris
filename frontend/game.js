@@ -11,6 +11,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // upcoming display
     const upcomingGrid = document.querySelector('.upcomingGrid');
     let upcomingSquares = Array.from(upcomingGrid.querySelectorAll('div'));
+    // points displays
+    let scoreDisplay = document.querySelector('.score');
+    let linesDisplay = document.querySelector('.lines');
+    let score = 0;
+    let lines = 0;
+    let currentIndex = 0;
 
     // start button
     const startBtn = document.querySelector('button');
@@ -173,6 +179,8 @@ document.addEventListener('DOMContentLoaded', () => {
             currentPos = 4;
             drawTet();
             upDisplay();
+            gameOver();
+            addScore();
         }
     };
 
@@ -187,7 +195,35 @@ document.addEventListener('DOMContentLoaded', () => {
             nextRandom = Math.floor(Math.random()*tetArray.length);
             upDisplay();
         }
-    })
+    });
+
+    // game over
+    const gameOver = () => {
+        if (current.some(index => block[currentPos + index].classList.contains('block2')))
+        scoreDisplay.innerHTML = 'Game Over';
+        clearInterval(timerId);
+    };
+    const addScore = () => {
+        for(currentIndex = 0; currentIndex < 199; currentIndex += width) {
+            const row = [
+                currentIndex, currentIndex+1, currentIndex+2, currentIndex+3, currentIndex+4,
+                currentIndex+5, currentIndex+6, currentIndex+7, currentIndex+8, currentIndex+9,
+            ]
+            if (row.every(index => block[index].classList.contains('block2'))) {
+                score += 10;
+                lines += 1;
+                scoreDisplay.innerHTML = score;
+                linesDisplay.innerHTML = lines;
+                row.forEach(index => {
+                    block[index].classList.remove('block2') || block[index].classList.remove('block');
+                })
+                // splice array
+                const blocksRemoved = block.splice(currentIndex, width);
+                block = blocksRemoved.concat(block);
+                block.forEach(cell => grid.appendChild(cell));
+            }
+        }
+    }
 })
 
 
