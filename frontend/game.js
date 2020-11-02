@@ -203,10 +203,19 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             drawTet();
             timerId = setInterval(moveDown, 1000);
-            nextRandom = Math.floor(Math.random()*tetArray.length);
-            upDisplay();
+            if (upcomingSquares.some(square => square.classList.contains('block')) === false) {
+                nextRandom = Math.floor(Math.random()*tetArray.length);
+                upDisplay();
+            }
         }
     });
+    startBtn.addEventListener('click', () => {
+        if (startBtn.innerHTML === 'Start!') {
+            startBtn.innerHTML = 'Pause';
+        } else {
+            startBtn.innerHTML = 'Start!';
+        }
+    })
 
     // game over
     const gameOver = () => {
