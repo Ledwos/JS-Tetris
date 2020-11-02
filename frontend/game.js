@@ -188,9 +188,10 @@ document.addEventListener('DOMContentLoaded', () => {
             current = tetArray[randomTet][currentRot];
             currentPos = 4;
             addScore();
+            gameOver();
             drawTet();
             upDisplay();
-            gameOver();
+            
         }
     };
 
@@ -209,10 +210,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // game over
     const gameOver = () => {
-        if (current.some(index => block[currentPos + index].classList.contains('block2')))
-        scoreDisplay.innerHTML = 'Game Over';
-        clearInterval(timerId);
+        if (current.some(index => block[currentPos + index].classList.contains('block2'))) {
+            scoreDisplay.innerHTML = 'Game Over';
+            clearInterval(timerId);
+        }
     };
+
     const addScore = () => {
         for(currentIndex = 0; currentIndex < 199; currentIndex += width) {
             const row = [
